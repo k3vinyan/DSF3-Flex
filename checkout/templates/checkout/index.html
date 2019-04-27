@@ -1,0 +1,59 @@
+{% extends 'home/layout.html' %}
+
+  {% block content %}
+  {% load staticfiles %}
+    <link href="{% static 'css/checkout.css' %}" rel="stylesheet" />
+  <div class="container">
+    <table class="striped">
+      <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th class="center">Route</th>
+            <th class="center">Package Total</th>
+            <!-- At station and onthe road not avaiable without client piggyback page -->
+            <!-- <th>At Station | onTheRoad</th> -->
+            <th>Check Out</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if drivers %}
+          {% for driver in drivers %}
+            <tr id="tr-id-{{driver.id}}" class="unchecked" class="center-align">
+              <td>{{ driver.firstName }}</td>
+              <td>{{ driver.lastName }}</td>
+              <td class="center">{{ driver.route.route }}</td>
+              {% for route in routes %}
+                {% if route.route == driver.route.route %}
+                  <td class="center-align">{{ route.tbaCount }}</td>
+                {% endif %}
+              {% endfor %}
+              {% if driver.route.isUnplanned is True or driver.route.isSplit is True %}
+                <td class="center-align">N/A</td>
+              {% else %}
+                {% for route in routingTools %}
+                  {% if route.route == driver.route.route %}
+                    <td class="center-align">{{route.atStation}} | {{route.onRoad }}</td>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+              <td>
+                <form action="#" method="POST" id="form-checkout">
+                  {% csrf_token %}
+                  <input type="hidden" name="firstName" value={{driver.firstName}} />
+                  <input type="hidden" name="lastname" value={{driver.lastName}} />
+                  <input type="hidden" name="driver_id" value={{driver.id}} />
+                  <input type="checkbox" id={{driver.id}} class="checkout"/>
+                  <label for={{driver.id}} >CHECK OUT</label>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  {% load static %}
+  <script type="text/javascript" src="{% static 'javascripts/checkout.js' %}"></script>
+  {% endblock %}

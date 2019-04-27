@@ -1,0 +1,9 @@
+#graph {
+  width: 100%;
+}
+
+#averageTime {
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+}

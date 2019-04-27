@@ -1,0 +1,63 @@
+{% extends 'home/layout.html' %}
+
+  {% block content %}
+  <div class="container">
+    <form action="" method="GET">
+      {% csrf_token %}
+        <input type="text" name="time" class="timepicke" placeholder="09:49AM">
+        <input class="waves-effect waves-light btn" type="submit" value="submit"/>
+    </form>
+  </div>
+
+  <div class="container">
+    <table class="striped">
+      <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>DP ID</th>
+            <th>Block</th>
+            <th>Shift Length</th>
+            <th>Check In</th>
+            <th>No Show</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if drivers %}
+          {% for driver in drivers %}
+            <tr id="tr-id-{{driver.id}}" class="unchecked">
+              <td>{{ driver.firstName }}</td>
+              <td>{{ driver.lastName }}</td>
+              <td>{{ driver.DPID }}</td>
+              <td>{{ driver.startTime}}-{{driver.endTime}}</td>
+              <td class="center-align">{{ driver.shiftLength }}</td>
+              <td>
+                <form action="#" method="POST" class="form-checkin">
+                  {% csrf_token %}
+                    <input type="hidden" name="firstName" value={{driver.firstName}} />
+                    <input type="hidden" name="lastname" value={{driver.lastName}} />
+                    <input type="hidden" name="driver-id" value={{driver.id}} />
+                    <input type="checkbox" id="checkin-{{driver.id}}" class="checkin" />
+                    <label for="checkin-{{driver.id}}" class="black-text" >CHECK IN</label>
+                  </form>
+              </td>
+              <td>
+                <form action="#" method="POST" class="form-noShow" id="form-noShow-{{driver.id}}">
+                  {% csrf_token %}
+                    <input type="hidden" name="firstName" value={{driver.firstName}} />
+                    <input type="hidden" name="lastname" value={{driver.lastName}} />
+                    <input type="hidden" name="driver-id" value={{driver.id}} />
+                    <input type="checkbox" id="noShow-{{driver.id}}" class="checkout" />
+                    <label for="noShow-{{driver.id}}" class="black-text" >NO SHOW</label>
+                  </form>
+              </td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  {% load static %}
+
+  <script type="text/javascript" src="{% static 'javascripts/checkin.js' %}"></script>
+  {% endblock %}
