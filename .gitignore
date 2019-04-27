@@ -1,0 +1,8 @@
+.env
+db.sqlite3
+venv
+drivers/templates/drivers/roster.html
+checkout/templates/checkout/routingtool.html
+*/migrations
+*.pyc
+test-roster.html

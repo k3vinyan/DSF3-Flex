@@ -1,0 +1,150 @@
+{% extends 'home/layout.html' %}
+
+  {% block content %}
+  {% load staticfiles %}
+    <link href="{% static 'css/routes.css' %}" rel="stylesheet" />
+  <div class="overlay">
+    <div class="container loading loading-text">
+      <h1 class="loading-text">Adding Routes. Please Wait.....</h1>
+      <div class="progress">
+        <div class="indeterminate"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container center-align">
+    <div class="row ">
+      {% if message %}
+        <div class="message">
+          <br />
+          {{message}}
+        </div>
+      {% endif %}
+      <h1>Routes</h1>
+
+      <!-- Modal Trigger -->
+   <a class="waves-effect waves-light btn modal-trigger" href="#addRouteModal">Add Unplanned Route</a>
+   <a class="waves-effect waves-light btn modal-trigger" href="#deleteRouteModal">Delete Route</a>
+
+   <div id="deleteRouteModal" class="deleteRouteModal modal">
+     <div class="modal-content">
+       <h3>Delete Route:</h3>
+       <form action="/routes/deleteRoute" method="POST">
+         {% csrf_token %}
+         <div class="input-field col s12">
+          <select name="route">
+            <option value="" disabled selected>Select Route</option>
+            {% for route in allRoutes %}
+              <option value={{route.route}}>{{route.route}}</option>
+            {% endfor %}
+          </select>
+        </div>
+         <div class="modal-footer">
+           <button class="btn waves-effect waves-light modal-action modal-close" type="submit" name="action">
+             Submit
+           </button>
+          </div>
+        </form>
+     </div>
+   </div>
+
+
+
+
+   <!-- Modal Structure -->
+   <div id="addRouteModal" class="addRouteModal modal">
+     <div class="modal-content">
+       <h3>ADD ROUTES:</h3>
+       <form action="/routes/addRoute" method="POST">
+         {% csrf_token %}
+         <div class="input-field col s12">
+          <select name="type">
+            <option value="" disabled selected>Type of Route</option>
+            <option value="Split">Split</option>
+            <option value="Unplanned">Unplanned</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+        <div class="input-field col s4">
+          <input id="route" name="route" type="text" class="validate" value="">
+          <label for="route">Route</label>
+        </div>
+        <div class="input-field col s4">
+          <input id="quantity" name="quantity" type="text" class="validate" value="">
+          <label for="quantity">Quantity</label>
+        </div>
+        <div class="input-field col s4">
+          <textarea name="tbas">
+          </textarea>
+          <label for=textrea>Add Tbas Here</label>
+        </div>
+           <div class="modal-footer">
+             <button class="btn waves-effect waves-light modal-action modal-close" type="submit" name="action">
+               Submit
+             </button>
+            </div>
+        </form>
+     </div>
+   </div>
+  </div>
+
+
+  {% for cluster, count in clusterCount.items %}
+    <div class="cluster-name">
+      {% if cluster == "" or None %}
+        <h3>No Cluster | {{count}}</h3>
+      {% else %}
+        <h3>{{cluster}} | {{count}}</h3>
+      {% endif %}
+    </div>
+    <ul class="collapsible popout">
+      {% for route, count in routeCount.items %}
+          {% if route.cluster == cluster %}
+            <li>
+              <div class="collapsible-header"><i class="material-icons">directions_car</i>
+                {% if route.route == "" or None %}
+                  No Route | {{count}}
+                {% else %}
+                  {{route.route}} | {{count}}
+                {%endif %}
+              </div>
+
+
+        <div class="collapsible-body">
+          <table class="striped">
+            <thead>
+              <tr>
+                <th class="center-align">TBA</th>
+                <th class="center-align">Address</th>
+                <th class="center-align">City</th>
+                <th class="center-align">Zip Code</th>
+                <th class="center-align">Status</th>
+                <th class="center-align">Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for tba in allTbas %}
+                {% if tba.route == route %}
+                  <tr>
+                    <td class="center-align">{{tba.tba}}</td>
+                    <td class="center-align">{{tba.address}}</td>
+                    <td class="center-align">{{tba.city}}</td>
+                    <td class="center-align">{{tba.zipCode}}</td>
+                    <td class="center-align">{{tba.status}}</td>
+                    <td class="center-align"><a href={{tba.link}} target="_blank">More Info</a></td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </li>
+      {% endif %}
+    {% endfor %}
+    </ul>
+    <br>
+  {% endfor %}
+
+  {% load static %}
+    <script type="text/javascript" src="{% static 'javascripts/routes.js' %}"></script>
+{% endblock %}

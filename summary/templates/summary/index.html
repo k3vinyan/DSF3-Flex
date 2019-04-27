@@ -1,0 +1,68 @@
+{% extends 'home/layout.html' %}
+
+{% block content %}
+{% load staticfiles %}
+  <link href="{% static 'css/summary.css' %}" rel="stylesheet" />
+
+  <div class="section">
+    <h1 class="center">Shift Summary</h1>
+    <div id="graph">
+      {{ line_chart.as_html }}
+    </div>
+  </div>
+  <div >
+    <p id="averageTime">
+      Average: {{averageTime}} minutes
+    </p>
+  </div>
+  <div class="section">
+    <div class='center'>
+      <h3>Unplanned Route Report</h3>
+    </div>
+    <div>
+      <table class="striped">
+            <thead>
+              <tr>
+                  <th>Block Time</th>
+                  <th>Shift Length</th>
+                  <th>Requested</th>
+                  <th>Accepted</th>
+                  <th class="center">Actual</th>
+                  <th class="center">Unplanned Routes</th>
+                  <th>Bridge</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if unplannedData %}
+                {% for key, value in unplannedData.items %}
+                  <tr>
+                    <td>{{key}}</td>
+                    <td>{{key.shiftLength}}</td>
+                    <td></td>
+                    <td>{{value.accepted}}</td>
+                    <td class="center">{{value.actual}}</td>
+                    <td class="center">{{value.unplanned}}</td>
+                    <td>
+                      {% for item in value.bridge %}
+                        {{item}}
+                      {% endfor %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              {% endif %}
+
+            </tbody>
+          </table>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+{% endblock %}
