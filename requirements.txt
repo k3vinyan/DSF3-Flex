@@ -12,7 +12,6 @@ gevent==1.4.0
 gevent-socketio==0.2.1
 gevent-websocket==0.10.1
 greenlet==0.4.15
-gyp==0.1
 idna==2.8
 ipaddress==1.0.17
 keyring==10.6.0
