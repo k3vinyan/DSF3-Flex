@@ -45,8 +45,6 @@ def index(request):
             driverHour = int(driverTime[0])
             driverMin = int(driverTime[1].split(" ")[0])
             driverPeriod = driverTime[1].split(" ")[1]
-            if driver.checkin == True:
-                print driver.isAssigned
 
             if driver.checkin == False and driver.isNoShow == True and driverHour >= todayHour:
                 notArrivedDrivers.append(driver)
@@ -82,18 +80,3 @@ def index(request):
                     'totalAssignDrivers':totalAssignDrivers
                 })
 
-
-    # #create session and redirect to homepage
-    # if request.method == 'POST':
-    #     email = request.POST.get('email')
-    #     password = request.POST.get('password')
-    #     s = sessionHelper.getAmazonSession(email, password)
-    #     response = redirect('/')
-    #
-    #     for cookie in s.cookies:
-    #         response.set_cookie(cookie.name, cookie.value, domain='dsf3-flex.herokuapp.com')
-    #
-    #
-    #     return response
-    # else:
-    #     return render(request, 'home/login.html', {'error': 'email or password is incorrect'})
