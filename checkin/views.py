@@ -70,10 +70,17 @@ def isCheckin(request):
 
 def noShow(request):
     if request.method == "POST":
+<<<<<<< HEAD
         driver_id = request.POST.get('driver-id')
         driver = Driver.objects.get(id=driver_id)
         if driver.isNoShow == False:
             driver.isNoShow = True
+=======
+        driver_id = request.POST.get('driver-id');
+        driver = Driver.objects.get(id=driver_id)
+        if driver.isNoShow == False:
+            driver.isNoShow = True;
+>>>>>>> development
             driver.checkin = False
             driver.save(update_fields=['isNoShow'])
             driver.save(update_fields=['checkin'])

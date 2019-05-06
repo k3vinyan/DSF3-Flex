@@ -17,6 +17,16 @@
    color: #FFFFFF;
  }
 
+<<<<<<< HEAD
 .center {
   text-align: center;
 }
+=======
+ .clockpicker.picker {
+   display: block;
+ }
+
+ body {
+   background: black;
+ }
+>>>>>>> development

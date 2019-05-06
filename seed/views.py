@@ -64,7 +64,10 @@ def seedRoutes(request):
             tba = item['tba']
             route = item['route']
             
+<<<<<<< HEAD
             
+=======
+>>>>>>> development
             try:
                 r = Route.objects.get(route=route)
             except ObjectDoesNotExist:
@@ -84,6 +87,7 @@ def seedRoutes(request):
                 # change status to at station for seed data
                 ##status = item['status']
                 status = "At Station"
+<<<<<<< HEAD
                 
                 #link not needed anymore since since is obsolete
                 # link = item['link']
@@ -93,6 +97,11 @@ def seedRoutes(request):
                 city = item['city']
                 zipCode = item['zipCode']
                 tba = Tba(route=r, tba=tba, status=status, link=link, address=address, city=city, zipCode=zipCode)
+=======
+                link = item['link']
+                address = item['address']
+                tba = Tba(route=r, tba=tba, status=status, link=link, address=address)
+>>>>>>> development
                 tba.save()
 
 

@@ -22,8 +22,6 @@ def drivers(request):
     if request.method == 'GET':
         data = serializers.serialize("json", Driver.objects.all())
 
-        print "cat"
-
         for item in req:
 
             name = item['driverName'].split(" ")
@@ -108,7 +106,6 @@ def tbas(request):
     if request.method == 'POST':
         req = json.loads(request.body)
 
-        print req
         for item in req:
 
             tba = item['tba']
@@ -126,8 +123,6 @@ def tbas(request):
                     Route.objects.get(route=route)
                 except ObjectDoesNotExist:
                     cluster = filter(lambda x: x.isalpha(), route)
-                    print cluster
-                    print route
                     aRoute = Route(
                                     route=route,
                                     cluster = cluster,
@@ -229,8 +224,6 @@ def routingtools(request):
                     r.betweenFC = betweenFC
                     r.other = other
                     r.save(update_fields["atStation"])
-                    r.save(update_fields["delivered"])
-                    r.save(update_fields["attempted"])
                     r.save(update_fields["undelivered"])
                     r.save(update_fields["onRoad"])
                     r.save(update_fields["betweenFC"])
