@@ -7,7 +7,6 @@ cssselect==1.0.3
 dj-database-url==0.4.2
 Django==1.11.10
 django-environ==0.4.4
-enum34==1.1.2
 eventlet==0.23.0
 gevent==1.2.2
 gevent-socketio==0.2.1
