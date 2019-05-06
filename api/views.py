@@ -22,8 +22,6 @@ def drivers(request):
     if request.method == 'GET':
         data = serializers.serialize("json", Driver.objects.all())
 
-        print "cat"
-
         for item in req:
 
             name = item['driverName'].split(" ")
@@ -126,8 +124,6 @@ def tbas(request):
                     Route.objects.get(route=route)
                 except ObjectDoesNotExist:
                     cluster = filter(lambda x: x.isalpha(), route)
-                    print cluster
-                    print route
                     aRoute = Route(
                                     route=route,
                                     cluster = cluster,
