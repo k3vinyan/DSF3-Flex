@@ -84,7 +84,7 @@ Frontend: HTML, Django Template Engine, JavaScript, MaterializeCSS, Custom CSS
 
 ## Run Locally
 
-1. Run inline command in terminal - 'git clone https://github.com/k3vinyan/DSF3-Flex.git'
+1. Run inline command in terminal - 'git clone https:<span></span>//github.com/k3vinyan/DSF3-Flex.git'
 2. cd into clone folder
 3. Run inline command 'python manage.py runserver
 4. Go to localhost:8000 in your browser
